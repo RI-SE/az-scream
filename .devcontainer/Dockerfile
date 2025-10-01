@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/devcontainers/rust:latest AS devcontainer
+FROM mcr.microsoft.com/devcontainers/rust:dev-bookworm AS devcontainer
 
 # Install additional packages
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
@@ -18,10 +18,6 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     ninja-build \
     libx264-dev \
     libopenh264-dev \
-    libavcodec-dev \
-    libavformat-dev \
-    libavutil-dev \
-    libswscale-dev \
     nasm \
     yasm \
     pkg-config
@@ -58,7 +54,7 @@ COPY code/ code
 RUN ./gstscream/scripts/build.sh
 
 # ---- Runtime Stage ----
-FROM debian:12-slim
+FROM debian:bookworm-slim
 
 # Install runtime dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
