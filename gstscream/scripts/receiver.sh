@@ -17,7 +17,7 @@ VIDEOSINK="videoconvert ! fpsdisplaysink video-sink=\"ximagesink\""
 #VIDEOSINK="glupload ! glcolorconvert ! fpsdisplaysink video-sink=\"glimagesinkelement\""
 #VIDEOSINK="fakesink"
 
-export RECVPIPELINE="rtpbin latency=10 name=r \
+export RECVPIPELINE="rtpbin latency=50 name=r \
 udpsrc port=$PORT0_RTP address=$RECEIVER_IP $RETRIEVE_ECN ! \
  queue $SCREAMRX0 ! application/x-rtp, media=video, encoding-name=H${ENC_ID}, clock-rate=90000 ! r.recv_rtp_sink_0 r. ! rtph${ENC_ID}depay ! h${ENC_ID}parse ! $DECODER name=videodecoder0 ! $QUEUE ! $VIDEOSINK \
  r.send_rtcp_src_0 ! funnel name=f0 ! queue ! udpsink host=$SENDER_IP port=$PORT0_RTCP sync=false async=false \
